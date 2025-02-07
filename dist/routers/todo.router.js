@@ -17,7 +17,7 @@ const validateTodo_utils_1 = __importDefault(require("../utils/validateTodo.util
 const todo_model_1 = __importDefault(require("../model/todo.model"));
 const todoRouter = express_1.default.Router();
 // Create a new Todo
-todoRouter.post("/todos", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+todoRouter.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const validation = (0, validateTodo_utils_1.default)(req.body);
     if (!validation.success) {
         return res.status(400).json({ error: validation.error });
@@ -34,7 +34,7 @@ todoRouter.post("/todos", (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 }));
 // Get all Todos with search, filtering, and pagination
-todoRouter.get("/todos", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+todoRouter.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { search, completed, page = "1", limit = "10" } = req.query;
         let filter = {};
@@ -63,7 +63,7 @@ todoRouter.get("/todos", (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 }));
 // Update a Todo
-todoRouter.put("/todos/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+todoRouter.put("/update/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const validation = (0, validateTodo_utils_1.default)(req.body);
     if (!validation.success) {
         return res.status(400).json({ error: validation.error });
@@ -85,7 +85,7 @@ todoRouter.put("/todos/:id", (req, res) => __awaiter(void 0, void 0, void 0, fun
     }
 }));
 // Delete a Todo
-todoRouter.delete("/todos/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+todoRouter.delete("/delete/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const deletedTodo = yield todo_model_1.default.findByIdAndDelete(req.params.id);
         if (!deletedTodo) {

@@ -14,9 +14,7 @@ todoRouter.post("/create", async (req: any, res: any) => {
   try {
     const newTodo = new Todo(validation.data);
     await newTodo.save();
-    return res
-      .status(201)
-      .json({ data: newTodo, message: "Todo added successfully" });
+    return res.status(201).json({ message: "Todo added successfully" });
   } catch (err) {
     return res.status(500).json({ error: "Server Error" });
   }
@@ -53,6 +51,19 @@ todoRouter.get("/all", async (req: any, res: any) => {
   }
 });
 
+// ✅ Get a Todo by ID
+todoRouter.get("/:id", async (req: any, res: any) => {
+  try {
+    const todo = await Todo.findById(req.params.id);
+    if (!todo) {
+      return res.status(404).json({ error: "Todo not found" });
+    }
+    return res.json({ data: todo });
+  } catch (err) {
+    return res.status(500).json({ error: "Server Error" });
+  }
+});
+
 // Update a Todo
 todoRouter.put("/update/:id", async (req: any, res: any) => {
   const validation = validateTodo(req.body);
@@ -68,7 +79,6 @@ todoRouter.put("/update/:id", async (req: any, res: any) => {
       return res.status(404).json({ error: "Todo not found" });
     }
     return res.json({
-      data: updatedTodo,
       message: "Todo updated successfully",
     });
   } catch (err) {
