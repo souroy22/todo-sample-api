@@ -5,7 +5,7 @@ import Todo from "../model/todo.model";
 const todoRouter = express.Router();
 
 // Create a new Todo
-todoRouter.post("/todos", async (req: any, res: any) => {
+todoRouter.post("/create", async (req: any, res: any) => {
   const validation = validateTodo(req.body);
   if (!validation.success) {
     return res.status(400).json({ error: validation.error });
@@ -23,7 +23,7 @@ todoRouter.post("/todos", async (req: any, res: any) => {
 });
 
 // Get all Todos with search, filtering, and pagination
-todoRouter.get("/todos", async (req: any, res: any) => {
+todoRouter.get("/all", async (req: any, res: any) => {
   try {
     const { search, completed, page = "1", limit = "10" } = req.query;
 
@@ -54,7 +54,7 @@ todoRouter.get("/todos", async (req: any, res: any) => {
 });
 
 // Update a Todo
-todoRouter.put("/todos/:id", async (req: any, res: any) => {
+todoRouter.put("/update/:id", async (req: any, res: any) => {
   const validation = validateTodo(req.body);
   if (!validation.success) {
     return res.status(400).json({ error: validation.error });
@@ -77,7 +77,7 @@ todoRouter.put("/todos/:id", async (req: any, res: any) => {
 });
 
 // Delete a Todo
-todoRouter.delete("/todos/:id", async (req: any, res: any) => {
+todoRouter.delete("/delete/:id", async (req: any, res: any) => {
   try {
     const deletedTodo = await Todo.findByIdAndDelete(req.params.id);
     if (!deletedTodo) {
