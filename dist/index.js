@@ -47,6 +47,9 @@ const validateTodo = (data) => {
     }
     return { success: true, data };
 };
+app.get("/", (_, res) => {
+    return res.status(200).json({ msg: "Successfully running" });
+});
 // Create a new Todo
 app.post("/todos", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const validation = validateTodo(req.body);
