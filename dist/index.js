@@ -55,19 +55,19 @@ app.post("/todos", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
     try {
         const newTodo = new Todo(validation.data);
         yield newTodo.save();
-        return res.status(201).json(newTodo);
+        res.status(201).json(newTodo);
     }
     catch (err) {
-        return res.status(500).json({ error: "Server Error" });
+        res.status(500).json({ error: "Server Error" });
     }
 }));
 // Get all Todos with search and filtering
 app.get("/todos", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { search, completed } = req.query;
     let filter = {};
-    if (typeof search === "string")
+    if (search)
         filter.title = { $regex: search, $options: "i" };
-    if (typeof completed === "string")
+    if (completed)
         filter.completed = completed === "true";
     try {
         const todos = yield Todo.find(filter);
