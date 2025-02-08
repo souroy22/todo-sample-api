@@ -25,9 +25,7 @@ todoRouter.post("/create", (req, res) => __awaiter(void 0, void 0, void 0, funct
     try {
         const newTodo = new todo_model_1.default(validation.data);
         yield newTodo.save();
-        return res
-            .status(201)
-            .json({ data: newTodo, message: "Todo added successfully" });
+        return res.status(201).json({ message: "Todo added successfully" });
     }
     catch (err) {
         return res.status(500).json({ error: "Server Error" });
@@ -62,6 +60,19 @@ todoRouter.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function*
         return res.status(500).json({ error: "Server Error" });
     }
 }));
+// ✅ Get a Todo by ID
+todoRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const todo = yield todo_model_1.default.findById(req.params.id);
+        if (!todo) {
+            return res.status(404).json({ error: "Todo not found" });
+        }
+        return res.json({ data: todo });
+    }
+    catch (err) {
+        return res.status(500).json({ error: "Server Error" });
+    }
+}));
 // Update a Todo
 todoRouter.put("/update/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const validation = (0, validateTodo_utils_1.default)(req.body);
@@ -76,7 +87,6 @@ todoRouter.put("/update/:id", (req, res) => __awaiter(void 0, void 0, void 0, fu
             return res.status(404).json({ error: "Todo not found" });
         }
         return res.json({
-            data: updatedTodo,
             message: "Todo updated successfully",
         });
     }

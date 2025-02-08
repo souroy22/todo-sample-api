@@ -52,7 +52,7 @@ todoRouter.get("/all", async (req: any, res: any) => {
 });
 
 // ✅ Get a Todo by ID
-todoRouter.get("/:id", async (req: any, res: any) => {
+todoRouter.get("/details/:id", async (req: any, res: any) => {
   try {
     const todo = await Todo.findById(req.params.id);
     if (!todo) {
