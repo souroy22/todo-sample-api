@@ -61,7 +61,7 @@ todoRouter.get("/all", (req, res) => __awaiter(void 0, void 0, void 0, function*
     }
 }));
 // ✅ Get a Todo by ID
-todoRouter.get("/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+todoRouter.get("/details/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const todo = yield todo_model_1.default.findById(req.params.id);
         if (!todo) {

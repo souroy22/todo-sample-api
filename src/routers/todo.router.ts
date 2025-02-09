@@ -65,7 +65,7 @@ todoRouter.get("/details/:id", async (req: any, res: any) => {
 });
 
 // Update a Todo
-todoRouter.put("/update/:id", async (req: any, res: any) => {
+todoRouter.patch("/update/:id", async (req: any, res: any) => {
   const validation = validateTodo(req.body);
   if (!validation.success) {
     return res.status(400).json({ error: validation.error });
