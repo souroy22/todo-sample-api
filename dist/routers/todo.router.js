@@ -74,7 +74,7 @@ todoRouter.get("/details/:id", (req, res) => __awaiter(void 0, void 0, void 0, f
     }
 }));
 // Update a Todo
-todoRouter.put("/update/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+todoRouter.patch("/update/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const validation = (0, validateTodo_utils_1.default)(req.body);
     if (!validation.success) {
         return res.status(400).json({ error: validation.error });

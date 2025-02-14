@@ -26,7 +26,13 @@ todoRouter.get("/all", async (req: any, res: any) => {
     const { search, completed, page = "1", limit = "10" } = req.query;
 
     let filter: Record<string, unknown> = {};
-    if (search) filter.title = { $regex: search, $options: "i" };
+    if (search) {
+      filter.$or = [
+        { title: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
     if (completed) filter.completed = completed === "true";
 
     const pageNumber = Math.max(1, parseInt(page, 10));
@@ -66,11 +72,6 @@ todoRouter.get("/details/:id", async (req: any, res: any) => {
 
 // Update a Todo
 todoRouter.patch("/update/:id", async (req: any, res: any) => {
-  const validation = validateTodo(req.body);
-  if (!validation.success) {
-    return res.status(400).json({ error: validation.error });
-  }
-
   try {
     const updatedTodo = await Todo.findByIdAndUpdate(req.params.id, req.body, {
       new: true,

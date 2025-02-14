@@ -2,12 +2,14 @@ import mongoose, { Document, model, Schema } from "mongoose";
 
 export interface ITodo extends Document {
   title: Schema.Types.String;
+  description: Schema.Types.String;
   completed: Schema.Types.Boolean;
 }
 
 const todoSchema = new Schema<ITodo>(
   {
     title: { type: String, required: true },
+    description: { type: String, required: true },
     completed: { type: Boolean, default: false },
   },
   { timestamps: true }
